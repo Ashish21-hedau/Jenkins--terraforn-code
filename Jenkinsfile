@@ -3,16 +3,12 @@ pipeline {
 
     environment {
         ARM_CLIENT_ID       = credentials('9e4903bf-6963-465c-826b-2a957ee657e7')
-        ARM_CLIENT_SECRET   = credentials('Zqs8Q~fFDlkiVhIwVTxOwXP8OZsurEmFrCt.Gcj6')
-        ARM_TENANT_ID       = credentials('d7c44a8d-e761-4608-b572-6b22608509a4')
+        ARM_CLIENT_SECRET   = credentials('Zqs8Q~fFDIkiVhlwVTxOwXP8OZsurEmFrCt.Gcj6')
         ARM_SUBSCRIPTION_ID = credentials('a9076473-03ad-4c76-8993-4edd69689ba6')
-        TF_ROOT             = 'module'
-        TF_PLAN             = 'tfplan'
-    }
+        ARM_TENANT_ID       = credentials('d7c44a8d-e761-4608-b572-6b22608509a4')
 
-    options {
-        timestamps()
-        skipStagesAfterUnstable()
+        TF_ROOT = 'module'
+        TF_PLAN = 'tfplan'
     }
 
     stages {
@@ -24,20 +20,10 @@ pipeline {
             }
         }
 
-        stage('Check Workspace') {
-            steps {
-                echo "Jenkins Workspace Path:"
-                sh 'pwd'
-                echo "Workspace Folder Structure:"
-                sh 'ls -R'
-            }
-        }
-
         stage('Terraform Init') {
             steps {
                 dir("${TF_ROOT}") {
-                    echo "Initializing Terraform in ${TF_ROOT}..."
-                    sh 'terraform init'   // <- backend.tf remove kar diya
+                    bat 'terraform init'
                 }
             }
         }
@@ -45,8 +31,7 @@ pipeline {
         stage('Terraform Validate') {
             steps {
                 dir("${TF_ROOT}") {
-                    echo "Validating Terraform configuration..."
-                    sh 'terraform validate'
+                    bat 'terraform validate'
                 }
             }
         }
@@ -54,8 +39,7 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 dir("${TF_ROOT}") {
-                    echo "Generating Terraform plan..."
-                    sh "terraform plan -out=${TF_PLAN}"
+                    bat "terraform plan -out=${TF_PLAN}"
                 }
             }
         }
@@ -69,23 +53,9 @@ pipeline {
         stage('Terraform Apply') {
             steps {
                 dir("${TF_ROOT}") {
-                    echo "Applying Terraform plan..."
-                    sh "terraform apply -auto-approve ${TF_PLAN}"
+                    bat "terraform apply -auto-approve ${TF_PLAN}"
                 }
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Cleaning Jenkins workspace...'
-            cleanWs()
-        }
-        success {
-            echo 'Terraform executed successfully ✅'
-        }
-        failure {
-            echo 'Terraform failed ❌'
         }
     }
 }
