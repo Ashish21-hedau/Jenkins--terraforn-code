@@ -5,6 +5,12 @@ terraform {
       version = "4.27.0"
     }
   }
+  backend "azurerm" {
+    resource_group_name  = "DoNotDeleteRg"
+    storage_account_name = "donotdeletestorage555555"
+    container_name       = "tfstate"
+    key                  = "ashish.terraform.tfstate"
+  }
 }
 
 provider "azurerm" {
