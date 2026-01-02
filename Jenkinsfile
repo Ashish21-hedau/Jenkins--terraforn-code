@@ -2,11 +2,11 @@ pipeline {
     agent any
 
     environment {
-        ARM_CLIENT_ID       = credentials('arm-client-id')
-        ARM_CLIENT_SECRET   = credentials('arm-client-secret')
-        ARM_SUBSCRIPTION_ID = credentials('arm-sub-id')
-        ARM_TENANT_ID       = credentials('arm-tenant-id')
-        TF_ROOT             = 'JioCloudInfra'
+        ARM_CLIENT_ID       = credentials('9e4903bf-6963-465c-826b-2a957ee657e7')
+        ARM_CLIENT_SECRET   = credentials('Zqs8Q~fFDlkiVhIwVTxOwXP8OZsurEmFrCt.Gcj6')
+        ARM_TENANT_ID       = credentials('d7c44a8d-e761-4608-b572-6b22608509a4')
+        ARM_SUBSCRIPTION_ID = credentials('a9076473-03ad-4c76-8993-4edd69689ba6')
+        TF_ROOT             = 'module'
         TF_PLAN             = 'tfplan'
     }
 
