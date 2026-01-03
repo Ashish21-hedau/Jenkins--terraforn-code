@@ -6,7 +6,7 @@ pipeline {
         ARM_CLIENT_SECRET   = credentials('arm-client-secret')
         ARM_SUBSCRIPTION_ID = credentials('arm-sub-id')
         ARM_TENANT_ID       = credentials('arm-tenant-id')
-        TF_ROOT             = 'JioCloudInfra'
+        TF_ROOT             = 'module'
         TF_PLAN             = 'tfplan'
     }
 
@@ -20,7 +20,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                    url: 'https://github.com/Akshay-Pakade/InfraFramework-Pipeline.git'
+                    url: 'https://github.com/Ashish21-hedau/Jenkins--terraforn-code.git'
             }
         }
 
